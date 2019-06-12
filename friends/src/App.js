@@ -1,12 +1,17 @@
 import React from "react";
-import "./App.css";
+import "./AppStyle.js";
+import GlobalStyle from "./components/theme/GlobalStyle";
 import Friends from "./components/friends/Friends";
+import AppWrapper from './AppStyle'
 
 function App() {
   return (
-    <div className="App">
-      <Friends />
-    </div>
+    <React.Fragment>
+      <GlobalStyle />
+      <AppWrapper>
+        <Friends />
+      </AppWrapper>
+    </React.Fragment>
   );
 }
 
