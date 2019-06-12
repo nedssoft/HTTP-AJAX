@@ -1,6 +1,6 @@
-import React from 'react';
-import './App.css';
-import Friends from './components/friends/Friends'
+import React from "react";
+import "./App.css";
+import Friends from "./components/friends/Friends";
 
 function App() {
   return (

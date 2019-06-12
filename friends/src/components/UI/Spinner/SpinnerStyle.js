@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes } from "styled-components";
 
 const spin = keyframes`
   0% {
@@ -7,12 +7,12 @@ const spin = keyframes`
   100% {
     opacity: 0;
   }
-`
- /** Got from https://loading.io/css/ */
+`;
+/** Got from https://loading.io/css/ */
 const spinnerWrapper = styled.div`
-    margin: auto;
-    padding: 4rem 0;
-    text-align: center;
+  margin: auto;
+  padding: 4rem 0;
+  text-align: center;
   .lds-spinner {
     color: official;
     display: inline-block;
@@ -84,5 +84,5 @@ const spinnerWrapper = styled.div`
       }
     }
   }
-`
-export default spinnerWrapper
+`;
+export default spinnerWrapper;
