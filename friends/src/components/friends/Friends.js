@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import axios from 'axios'
 import Friend from './Friend'
 import Spinner from '../UI/Spinner/Spinner'
+import FriendFrom from './FriendForm'
+
 const initialState = {
   isLoading: false,
   friends: [],
@@ -10,12 +12,11 @@ const initialState = {
 }
 
 const FriendsWrapper = styled.section`
-  width: 100%;
+  width: 800px;
   height: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
+  margin: auto;
 `
 export default function Friends() {
   const [state, setState] = useState(initialState);
@@ -26,7 +27,7 @@ export default function Friends() {
         isLoading: true,
       }))
       try {
-        const res = await axios.get('http://localhost:5000/friendds');
+        const res = await axios.get('http://localhost:5000/friends');
         setState(prevState => ({
           ...prevState,
           friends: res.data
@@ -55,6 +56,8 @@ export default function Friends() {
       {state.friends && state.friends.map(friend => (
         <Friend key={friend.id} friend={friend} />
       ))}
+
+      <FriendFrom />
     </FriendsWrapper>
   )
 }
