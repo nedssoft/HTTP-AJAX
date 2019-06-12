@@ -2,9 +2,11 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components'
 import axios from 'axios'
 import Friend from './Friend'
+import Spinner from '../UI/Spinner/Spinner'
 const initialState = {
   isLoading: false,
-  friends: []
+  friends: [],
+  errorMessage: null
 }
 
 const FriendsWrapper = styled.section`
@@ -24,14 +26,17 @@ export default function Friends() {
         isLoading: true,
       }))
       try {
-        const res = await axios.get('http://localhost:5000/friends');
-        console.log(res.data)
+        const res = await axios.get('http://localhost:5000/friendds');
         setState(prevState => ({
           ...prevState,
           friends: res.data
         }))
       } catch(err){
-        console.log(err)
+        debugger;
+        setState(prevState => ({
+          ...prevState,
+          errorMessage: err.message,
+        }))
       } finally{
         setState(prevState => ({
           ...prevState,
@@ -45,6 +50,8 @@ export default function Friends() {
 
   return (
     <FriendsWrapper>
+      { state.isLoading && <Spinner />}
+      { state.errorMessage && <p style={{ color: 'red'}}>{state.errorMessage}</p>}
       {state.friends && state.friends.map(friend => (
         <Friend key={friend.id} friend={friend} />
       ))}
