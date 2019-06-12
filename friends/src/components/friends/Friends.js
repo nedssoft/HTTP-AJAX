@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components'
 import axios from 'axios'
-
+import Friend from './Friend'
 const initialState = {
   isLoading: false,
   friends: []
@@ -45,7 +45,9 @@ export default function Friends() {
 
   return (
     <FriendsWrapper>
-
+      {state.friends && state.friends.map(friend => (
+        <Friend key={friend.id} friend={friend} />
+      ))}
     </FriendsWrapper>
   )
 }
