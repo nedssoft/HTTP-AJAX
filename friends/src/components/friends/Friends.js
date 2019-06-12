@@ -11,12 +11,19 @@ const initialState = {
   errorMessage: null
 }
 
-const FriendsWrapper = styled.section`
+const FriendsContainer = styled.section`
   width: 800px;
   height: 100%;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   margin: auto;
+  flex-direction: column;
+`
+const FriendsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
 `
 export default function Friends() {
   const [state, setState] = useState(initialState);
@@ -48,16 +55,31 @@ export default function Friends() {
     }
     fetchData()
   }, [])
+  const addNewFriend = async (newFriend) => {
+  
+    try {
+      const response = await axios.post('http://localhost:5000/friends', newFriend)
+        setState(prevState =>({
+       ...prevState,
+       friends: response.data
+     }))
+    } catch(err) {
+
+    } finally {
+
+    }
+   }
 
   return (
-    <FriendsWrapper>
+    <FriendsContainer>
       { state.isLoading && <Spinner />}
       { state.errorMessage && <p style={{ color: 'red'}}>{state.errorMessage}</p>}
-      {state.friends && state.friends.map(friend => (
-        <Friend key={friend.id} friend={friend} />
-      ))}
-
-      <FriendFrom />
-    </FriendsWrapper>
+      <FriendsWrapper>
+        {state.friends && state.friends.map(friend => (
+          <Friend key={friend.id} friend={friend} />
+        ))}
+      </FriendsWrapper>
+      <FriendFrom  addFriend={addNewFriend}/>
+    </FriendsContainer>
   )
 }

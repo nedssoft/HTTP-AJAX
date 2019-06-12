@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components'
 
 const FormWrapper = styled.div`
@@ -29,7 +29,7 @@ const FormWrapper = styled.div`
     }
   }
 `
-const intitalState = {
+const initialState = {
   form: {
     name: '',
     email: '',
@@ -37,20 +37,40 @@ const intitalState = {
   }
 }
 export default function FriendForm({ addFriend }) {
-  const [state, setState] = useState(intitalState)
+  const [state, setState] = useState(initialState)
 
-   const inputChangeHandler = (e) => {
-    console.log(e.target.value)
+   const inputChangeHandler = ({ target }) => {
+     const targetValue = target.value;
+     const targetName = target.name;
+     console.log(targetName, targetValue)
+     setState(prevState => ({
+       ...prevState,
+       form: {
+         ...prevState.form,
+         [targetName]: targetValue
+       }
+     }))
+     
   }
-  const submitHandler = () => {
-
+  const submitHandler = (e) => {
+    e.preventDefault()
+  
+    const { email, age, name } = state.form;
+    if ( email && age && name) {
+      addFriend({
+        name,
+        age,
+        email
+      })
+      setState(initialState)
+    }
   }
   return (
     <FormWrapper>
-    <form >
-    <input type="text" name="name"  onChange={inputChangeHandler}  placeholder="Name"/>
-    <input type="number" name="age" onChange={inputChangeHandler}   placeholder="age"/>
-    <input type="email" name="email" onChange={inputChangeHandler}  placeholder="Email"/>
+    <form onSubmit={submitHandler}>
+    <input type="text" name="name"  onChange={inputChangeHandler}  placeholder="Name"   value={state.form.name}/>
+    <input type="number" name="age" onChange={inputChangeHandler}   placeholder="Age"  value={state.form.age}/>
+    <input type="email" name="email" onChange={inputChangeHandler}  placeholder="Email" value={state.form.email}/>
     <button>Add Friend</button>
     </form>
     </FormWrapper>
