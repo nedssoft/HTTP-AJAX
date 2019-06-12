@@ -15,7 +15,7 @@ const FriendWrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
-export default function Friend({ friend, update }) {
+export default function Friend({ friend, update, deleteFriend }) {
   return (
     <FriendWrapper>
       <p>
@@ -27,7 +27,7 @@ export default function Friend({ friend, update }) {
       </p>
       <div>
         <button onClick={() => update(friend.id)}>Update</button>
-        <button>Delete</button>
+        <button onClick={() => deleteFriend(friend.id)}>Delete</button>
       </div>
     </FriendWrapper>
   );

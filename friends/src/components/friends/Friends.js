@@ -108,7 +108,8 @@ export default function Friends() {
       setState(prevState => ({
         ...prevState,
         isLoading: false,
-        form: initialForm
+        form: initialForm,
+        isUpdating: false
       }));
     }
   };
@@ -155,6 +156,20 @@ export default function Friends() {
       }
     }
   };
+  const deleteFriend = async (id) => {
+    try {
+      const { data } = await axios.delete(`http://localhost:5000/friends/${id}`)
+      setState(prevState => ({
+        ...prevState,
+        friends: data
+      }))
+    } catch (error) {
+      setState(prevState => ({
+        ...prevState,
+        errorMessage: error.message
+      }));
+    }
+  }
   return (
     <FriendsContainer>
       {state.isLoading && <Spinner />}
@@ -164,7 +179,12 @@ export default function Friends() {
       <FriendsWrapper>
         {state.friends &&
           state.friends.map(friend => (
-            <Friend key={friend.id} friend={friend} update={setCurrentFriend} />
+            <Friend
+              key={friend.id}
+              friend={friend}
+              update={setCurrentFriend}
+              deleteFriend={deleteFriend}
+            />
           ))}
       </FriendsWrapper>
       <FriendFrom
