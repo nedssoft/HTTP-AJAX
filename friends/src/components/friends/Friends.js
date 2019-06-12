@@ -8,7 +8,9 @@ import FriendFrom from './FriendForm'
 const initialState = {
   isLoading: false,
   friends: [],
-  errorMessage: null
+  errorMessage: null,
+  currentFriend: null,
+  isUpdating: false,
 }
 
 const FriendsContainer = styled.section`
@@ -40,7 +42,6 @@ export default function Friends() {
           friends: res.data
         }))
       } catch(err){
-        debugger;
         setState(prevState => ({
           ...prevState,
           errorMessage: err.message,
@@ -56,7 +57,11 @@ export default function Friends() {
     fetchData()
   }, [])
   const addNewFriend = async (newFriend) => {
-  
+    setState(prevState => ({
+      ...prevState,
+      isLoading: true,
+      errorMessage:''
+    }))
     try {
       const response = await axios.post('http://localhost:5000/friends', newFriend)
         setState(prevState =>({
@@ -64,22 +69,35 @@ export default function Friends() {
        friends: response.data
      }))
     } catch(err) {
-
+      setState(prevState => ({
+        ...prevState,
+        errorMessage: err.message,
+      }))
     } finally {
-
+      setState(prevState => ({
+        ...prevState,
+        isLoading: false,
+      }))
     }
    }
-
+   const setCurrentFriend = (id) => {
+    const currentFriend = state.friends.find(fr => fr.id === id)
+    setState(prevState => ({
+      ...prevState,
+      isUpdating: true,
+      currentFriend
+    }))
+   }
   return (
     <FriendsContainer>
       { state.isLoading && <Spinner />}
       { state.errorMessage && <p style={{ color: 'red'}}>{state.errorMessage}</p>}
       <FriendsWrapper>
         {state.friends && state.friends.map(friend => (
-          <Friend key={friend.id} friend={friend} />
+          <Friend key={friend.id} friend={friend}  update={setCurrentFriend}/>
         ))}
       </FriendsWrapper>
-      <FriendFrom  addFriend={addNewFriend}/>
+      <FriendFrom  addFriend={addNewFriend} isUpdating={state.isUpdating} />
     </FriendsContainer>
   )
 }

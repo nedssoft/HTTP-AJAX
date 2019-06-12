@@ -36,13 +36,12 @@ const initialState = {
     age: ''
   }
 }
-export default function FriendForm({ addFriend }) {
+export default function FriendForm({ addFriend, isUpdating }) {
   const [state, setState] = useState(initialState)
 
    const inputChangeHandler = ({ target }) => {
      const targetValue = target.value;
      const targetName = target.name;
-     console.log(targetName, targetValue)
      setState(prevState => ({
        ...prevState,
        form: {
@@ -54,7 +53,6 @@ export default function FriendForm({ addFriend }) {
   }
   const submitHandler = (e) => {
     e.preventDefault()
-  
     const { email, age, name } = state.form;
     if ( email && age && name) {
       addFriend({
@@ -65,13 +63,16 @@ export default function FriendForm({ addFriend }) {
       setState(initialState)
     }
   }
+   
   return (
     <FormWrapper>
     <form onSubmit={submitHandler}>
-    <input type="text" name="name"  onChange={inputChangeHandler}  placeholder="Name"   value={state.form.name}/>
+    <input type="text" name="name"  onChange={inputChangeHandler}  placeholder="Name"  value={state.form.name}/>
     <input type="number" name="age" onChange={inputChangeHandler}   placeholder="Age"  value={state.form.age}/>
     <input type="email" name="email" onChange={inputChangeHandler}  placeholder="Email" value={state.form.email}/>
-    <button>Add Friend</button>
+    <button>
+      { isUpdating ? 'Update': 'Add Friend'}
+    </button>
     </form>
     </FormWrapper>
   )

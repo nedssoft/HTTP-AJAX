@@ -15,11 +15,15 @@ const FriendWrapper = styled.div`
   justify-content: center;
   align-items: center;
 `
-export default function Friend({ friend}) {
+export default function Friend({ friend, update}) {
   return (
     <FriendWrapper>
       <p><strong>{friend.name}</strong> is <strong>{friend.age}</strong> years old </p>
       <p>And can be contacted via <strong>{friend.email}</strong></p> 
+      <div>
+        <button onClick={() => update(friend.id)}>Update</button>
+        <button>Delete</button>
+      </div>
     </FriendWrapper>
   )
 }
