@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Spinner from '../UI/Spinner/Spinner'
-import axios from 'axios'
+import Spinner from "../UI/Spinner/Spinner";
+import axios from "axios";
 
 const FormWrapper = styled.div`
   width: 400px;
@@ -37,12 +37,27 @@ const initialState = {
   form: {
     email: "",
     name: "",
-    age: ""
-  }
+    age: "",
+    id: ""
+  },
+  isUpdating: false
 };
-export default function FriendForm({ history }) {
-
-  const [state, setState ] = useState(initialState);
+const apiUrl = "http://localhost:5000/friends";
+export default function FriendForm({ history, match }) {
+  const [state, setState] = useState(initialState);
+  useEffect(() => {
+    if (match.params.friendId) {
+      axios.get(`${apiUrl}/${match.params.friendId}`).then(res =>
+        setState(prevState => ({
+          ...prevState,
+          form: {
+            ...res.data
+          },
+          isUpdating: true,
+        }))
+      );
+    }
+  }, [match.params.friendId]);
   const addNewFriend = async newFriend => {
     setState(prevState => ({
       ...prevState,
@@ -50,10 +65,7 @@ export default function FriendForm({ history }) {
       errorMessage: ""
     }));
     try {
-      const response = await axios.post(
-        "http://localhost:5000/friends",
-        newFriend
-      );
+      const response = await axios.post(apiUrl, newFriend);
       setState(prevState => ({
         ...prevState,
         friends: response.data
@@ -68,19 +80,15 @@ export default function FriendForm({ history }) {
         ...prevState,
         isLoading: false
       }));
-      history.push('/')
+      history.push("/");
     }
   };
   const updateFriend = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/friends/${state.currentFriend}`,
+        `${apiUrl}/${state.form.id}`,
         state.form
       );
-      setState(prevState => ({
-        ...prevState,
-        friends: response.data
-      }));
     } catch (err) {
       setState(prevState => ({
         ...prevState,
@@ -90,9 +98,10 @@ export default function FriendForm({ history }) {
       setState(prevState => ({
         ...prevState,
         isLoading: false,
-        form: initialState,
+        form: initialState.form,
         isUpdating: false
       }));
+      history.push('/')
     }
   };
   const setCurrentFriend = id => {
@@ -118,7 +127,6 @@ export default function FriendForm({ history }) {
         [targetName]: targetValue
       }
     }));
-    
   };
   const submitHandler = e => {
     e.preventDefault();
@@ -134,7 +142,7 @@ export default function FriendForm({ history }) {
         });
         setState(prevState => ({
           ...prevState,
-          form: {...initialState.form }
+          form: { ...initialState.form }
         }));
       }
     }
@@ -142,7 +150,9 @@ export default function FriendForm({ history }) {
   return (
     <FormWrapper>
       {state.isLoading && <Spinner />}
-      {state.errorMessage && <p style={{color: 'red'}}>{state.errorMessage}</p>}
+      {state.errorMessage && (
+        <p style={{ color: "red" }}>{state.errorMessage}</p>
+      )}
       <form onSubmit={submitHandler}>
         <input
           type="text"
@@ -165,8 +175,7 @@ export default function FriendForm({ history }) {
           placeholder="Email"
           value={state.form.email}
         />
-        { /*<button>{isUpdating ? "Update" : "Add Friend" </button>*/}
-        <button>Add Friend</button>
+        <button>{state.isUpdating ? "Update" : "Add Friend" }</button>
       </form>
     </FormWrapper>
   );

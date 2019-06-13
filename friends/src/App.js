@@ -14,7 +14,8 @@ function App() {
         <Switch>
           <AppWrapper>
             <Route exact path="/" component={Friends} />
-            <Route exact path="/add_friend" component={NewFriendPage} />
+            <Route  path="/add_friend" component={NewFriendPage} />
+            <Route path="/friend/:friendId" render={props => <NewFriendPage {...props} />} />
         </AppWrapper>
         </Switch>
       </Router>

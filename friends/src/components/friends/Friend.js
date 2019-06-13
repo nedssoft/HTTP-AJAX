@@ -16,6 +16,7 @@ const FriendWrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 export default function Friend({ friend, update, deleteFriend }) {
   return (
     <FriendWrapper>
@@ -27,7 +28,7 @@ export default function Friend({ friend, update, deleteFriend }) {
         And can be contacted via <strong>{friend.email}</strong>
       </p>
       <div>
-        <b>Update</b>
+        <Link to={`friend/${friend.id}`}>Update</Link>
         <button onClick={() => deleteFriend(friend.id)}>Delete</button>
       </div>
     </FriendWrapper>
