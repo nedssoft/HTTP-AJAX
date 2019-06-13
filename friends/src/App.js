@@ -5,6 +5,7 @@ import GlobalStyle from "./components/theme/GlobalStyle";
 import Friends from "./components/friends/Friends";
 import AppWrapper from './AppStyle'
 import NewFriendPage from './components/friends/FriendForm'
+import Header from './components/header/Header/Header'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Router>
         <Switch>
           <AppWrapper>
+            <Header />
             <Route exact path="/" component={Friends} />
             <Route  path="/add_friend" component={NewFriendPage} />
             <Route path="/friend/:friendId" render={props => <NewFriendPage {...props} />} />

@@ -6,7 +6,7 @@ import axios from "axios";
 const FormWrapper = styled.div`
   width: 400px;
   padding: 1rem;
-  margin: 1rem auto;
+  margin: 4rem auto;
   -webkit-box-shadow: 0px 0px 5px 0px rgba(204, 204, 204, 1);
   -moz-box-shadow: 0px 0px 5px 0px rgba(204, 204, 204, 1);
   box-shadow: 0px 0px 5px 0px rgba(204, 204, 204, 1);
@@ -17,17 +17,20 @@ const FormWrapper = styled.div`
     align-items: center;
     input,
     button {
-      padding: 0.8rem;
+      padding: 0.5rem 1rem;
       margin: 0.5rem auto;
       outline: none;
       border-radius: 6px;
       width: 80%;
       border: 1px solid #ccc;
+      font-size: 1.6rem;
     }
     button {
       cursor: pointer;
+      font-weight: 400;
       &:hover {
         background-color: #ccc;
+        color: white;
       }
     }
   }
