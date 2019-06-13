@@ -1,36 +1,59 @@
 import React from "react";
 import styled from "styled-components";
 import propTypes from "prop-types";
-import { Link } from 'react-router-dom'
-
+import { Link } from "react-router-dom";
+import { FaEdit,FaRegTrashAlt } from "react-icons/fa";
 const FriendWrapper = styled.div`
   width: 300px;
-  padding: 1rem;
+  padding: 0.8rem;
   text-align: center;
   -webkit-box-shadow: 0px 0px 5px 0px rgba(204, 204, 204, 1);
   -moz-box-shadow: 0px 0px 5px 0px rgba(204, 204, 204, 1);
   box-shadow: 0px 0px 5px 0px rgba(204, 204, 204, 1);
   margin: 1rem auto;
+  position: relative;
+`;
+const ControlButtons = styled.div`
+  position: absolute;
+  right: 15px;
+  top: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 `;
-
-export default function Friend({ friend, update, deleteFriend }) {
+const TextWrapper = styled.div`
+  margin-top: 22px;
+  margin-right: 2rem;
+  strong {
+    font-weight: bold;
+  }
+  p {
+    line-height: 1.5;
+    font-size: 1.2rem;
+  }
+`
+const EditBtn = styled(FaEdit)`
+  color:  orange;
+`
+const DeleteBtn = styled(FaRegTrashAlt)`
+  color: red;
+  cursor: pointer;
+`
+export default function Friend({ friend, deleteFriend }) {
   return (
     <FriendWrapper>
-      <p>
-        <strong>{friend.name}</strong> is <strong>{friend.age}</strong> years
-        old
-      </p>
-      <p>
-        And can be contacted via <strong>{friend.email}</strong>
-      </p>
-      <div>
-        <Link to={`friend/${friend.id}`}>Update</Link>
-        <button onClick={() => deleteFriend(friend.id)}>Delete</button>
-      </div>
+      <TextWrapper>
+        <p>
+          <strong>{friend.name}</strong> is <strong>{friend.age}</strong> years
+          old
+        </p>
+        <p>
+          And can be contacted via <strong>{friend.email}</strong>
+        </p>
+      </TextWrapper>
+      <ControlButtons>
+        <Link to={`friend/${friend.id}`}><EditBtn /></Link>
+        <DeleteBtn onClick={() => deleteFriend(friend.id)}>Delete</DeleteBtn>
+      </ControlButtons>
     </FriendWrapper>
   );
 }

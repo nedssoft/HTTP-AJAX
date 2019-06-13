@@ -4,7 +4,6 @@ import axios from "axios";
 import Friend from "./Friend";
 import Spinner from "../UI/Spinner/Spinner";
 
-
 const initialForm = {
   email: "",
   name: "",
@@ -66,20 +65,22 @@ export default function Friends() {
     };
     fetchData();
   }, []);
-  const deleteFriend = async (id) => {
+  const deleteFriend = async id => {
     try {
-      const { data } = await axios.delete(`http://localhost:5000/friends/${id}`)
+      const { data } = await axios.delete(
+        `http://localhost:5000/friends/${id}`
+      );
       setState(prevState => ({
         ...prevState,
         friends: data
-      }))
+      }));
     } catch (error) {
       setState(prevState => ({
         ...prevState,
         errorMessage: error.message
       }));
     }
-  }
+  };
   return (
     <FriendsContainer>
       {state.isLoading && <Spinner />}
