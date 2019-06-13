@@ -1,16 +1,23 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import "./AppStyle.js";
 import GlobalStyle from "./components/theme/GlobalStyle";
 import Friends from "./components/friends/Friends";
 import AppWrapper from './AppStyle'
+import NewFriendPage from './components/friends/FriendForm'
 
 function App() {
   return (
     <React.Fragment>
       <GlobalStyle />
-      <AppWrapper>
-        <Friends />
-      </AppWrapper>
+      <Router>
+        <Switch>
+          <AppWrapper>
+            <Route exact path="/" component={Friends} />
+            <Route exact path="/add_friend" component={NewFriendPage} />
+        </AppWrapper>
+        </Switch>
+      </Router>
     </React.Fragment>
   );
 }

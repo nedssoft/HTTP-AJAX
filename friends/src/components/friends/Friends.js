@@ -187,12 +187,12 @@ export default function Friends() {
             />
           ))}
       </FriendsWrapper>
-      <FriendFrom
+      { /* <FriendFrom
         submitHandler={submitHandler}
         isUpdating={state.isUpdating}
         changed={inputChangeHandler}
         friend={state.form}
-      />
+      /> */}
     </FriendsContainer>
   );
 }

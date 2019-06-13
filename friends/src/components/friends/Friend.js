@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import propTypes from "prop-types";
+import { Link } from 'react-router-dom'
 
 const FriendWrapper = styled.div`
   width: 300px;
@@ -26,7 +27,7 @@ export default function Friend({ friend, update, deleteFriend }) {
         And can be contacted via <strong>{friend.email}</strong>
       </p>
       <div>
-        <button onClick={() => update(friend.id)}>Update</button>
+        <b>Update</b>
         <button onClick={() => deleteFriend(friend.id)}>Delete</button>
       </div>
     </FriendWrapper>
