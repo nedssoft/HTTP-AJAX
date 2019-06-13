@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 import Spinner from "../UI/Spinner/Spinner";
 import axios from "axios";
 
@@ -10,6 +10,9 @@ const FormWrapper = styled.div`
   -webkit-box-shadow: 0px 0px 5px 0px rgba(204, 204, 204, 1);
   -moz-box-shadow: 0px 0px 5px 0px rgba(204, 204, 204, 1);
   box-shadow: 0px 0px 5px 0px rgba(204, 204, 204, 1);
+  @media (max-width: 500px) {
+      width: 100%;
+    }
   form {
     display: flex;
     flex-direction: column;
@@ -23,7 +26,10 @@ const FormWrapper = styled.div`
       border-radius: 6px;
       width: 80%;
       border: 1px solid #ccc;
-      font-size: 1.6rem;
+      font-size: 1.3rem;
+      @media (max-width: 500px) {
+      width: 100%;
+    }
     }
     button {
       cursor: pointer;

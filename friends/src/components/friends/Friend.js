@@ -1,8 +1,18 @@
 import React from "react";
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 import propTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { FaEdit,FaRegTrashAlt } from "react-icons/fa";
+
+const moveBtn = keyframes`
+  from {
+    margin-left: 20px;
+  }
+
+  to {
+    margin-left: 0;
+  }
+`
 const FriendWrapper = styled.div`
   width: 300px;
   padding: 0.8rem;
@@ -33,10 +43,16 @@ const TextWrapper = styled.div`
 `
 const EditBtn = styled(FaEdit)`
   color:  orange;
+  &:hover {
+    animation: ${moveBtn} 0.2s;
+  }
 `
 const DeleteBtn = styled(FaRegTrashAlt)`
   color: red;
   cursor: pointer;
+  &:hover {
+    animation: ${moveBtn} 0.2s;
+  }
 `
 export default function Friend({ friend, deleteFriend }) {
   return (
