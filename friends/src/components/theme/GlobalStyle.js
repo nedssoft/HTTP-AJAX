@@ -134,6 +134,7 @@ html {
 body {
   height: 100%;
   width: 100vw;
+  background: aliceblue;
 }
 button, input {
   outline: none;

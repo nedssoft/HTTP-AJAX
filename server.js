@@ -79,6 +79,10 @@ app.delete('/friends/:id', (req, res) => {
 	friends = friends.filter(friend => friend.id != req.params.id);
 	res.status(200).json(friends);
 });
+app.get('/friends/:id', (req, res) => {
+  friend = friends.find(friend => friend.id == req.params.id);
+	res.status(200).json(friend);
+});
 
 app.listen(5000, () => {
   console.log('server listening on port 5000');
